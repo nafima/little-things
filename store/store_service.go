@@ -54,7 +54,16 @@ func SaveUrlMapping(shortUrl string, originalUrl string, created_at string) {
 	if err != nil {
 		panic(fmt.Sprintf("Failed saving key url | Error: %v - shortUrl: %s - originalUrl: %s\n", err, shortUrl, originalUrl))
 	}
+}
 
+func updateUrlMapping(shortUrl string, originalUrl string, created_at string, counter int32) {
+	saved := DataStructure{Url: originalUrl, Counter: counter, Created_at: created_at}
+
+	savedJson, _ := json.Marshal(saved)
+	err := storeService.redisClient.Set(shortUrl, savedJson, CacheDuration).Err()
+	if err != nil {
+		panic(fmt.Sprintf("Failed saving key url | Error: %v - shortUrl: %s - originalUrl: %s\n", err, shortUrl, originalUrl))
+	}
 }
 
 func RetrieveInitialUrl(shortUrl string) string {
