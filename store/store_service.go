@@ -56,7 +56,7 @@ func SaveUrlMapping(shortUrl string, originalUrl string, created_at string) {
 	}
 }
 
-func updateUrlMapping(shortUrl string, originalUrl string, created_at string, counter int32) {
+func UpdateUrlMapping(shortUrl string, originalUrl string, created_at string, counter int32) {
 	saved := DataStructure{Url: originalUrl, Counter: counter, Created_at: created_at}
 
 	savedJson, _ := json.Marshal(saved)
